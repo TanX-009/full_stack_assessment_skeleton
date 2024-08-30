@@ -1,0 +1,80 @@
+.highContrastClickable {
+  padding: var(--sp-3xs);
+
+  font-size: inherit;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: var(--border) solid transparent;
+  outline: none;
+  border-radius: var(--radius);
+
+  background: var(--primary);
+  color: var(--onPrimary);
+
+  cursor: pointer;
+}
+
+.highContrastClickable:hover {
+  filter: brightness(95%);
+  -ms-filter: brightness(95%);
+  -webkit-filter: brightness(95%);
+}
+
+.highContrastClickable:active {
+  filter: brightness(90%);
+  -ms-filter: brightness(90%);
+  -webkit-filter: brightness(90%);
+}
+
+.lowContrastClickable {
+  padding: var(--sp-3xs);
+
+  font-size: inherit;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: var(--border) solid transparent;
+  outline: none;
+  border-radius: var(--radius);
+
+  background: inherit;
+  color: var(--onSurface);
+
+  cursor: pointer;
+}
+
+.lowContrastClickable:hover {
+  background: inherit;
+  border: var(--border) solid var(--primaryContainer);
+}
+
+.lowContrastClickable:active {
+  background: var(--surface);
+}
+
+.panel {
+  padding: var(--sp-3xs);
+
+  border: var(--border) solid var(--primaryContainer);
+  border-radius: var(--radius);
+
+  background: var(--onPrimary);
+}
+
+.textInput {
+  padding: var(--sp-3xs);
+
+  font-size: inherit;
+
+  border: var(--border) solid var(--primary);
+  outline: none;
+  border-radius: var(--radius);
+
+  background: var(--primaryContainer);
+  color: var(--primary);
+}
