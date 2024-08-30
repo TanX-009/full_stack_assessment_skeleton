@@ -1,0 +1,25 @@
+import { MouseEventHandler, ReactNode } from "react";
+
+interface TProps {
+  children: ReactNode;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
+  type?: "submit" | "button";
+}
+
+export default function HighContrast({
+  children,
+  onClick,
+  className = "",
+  type = "button",
+}: TProps) {
+  return (
+    <button
+      type={type}
+      className={"highContrastClickable " + className}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+}

@@ -1,0 +1,22 @@
+.navbar {
+  padding: var(--sp-3xs) var(--sp-xs);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userSelector {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4xs);
+}
+
+.userSelector > select {
+  padding: var(--sp-5xs) var(--sp-4xs);
+  border-radius: var(--radius);
+  border: none;
+  outline: none;
+
+  background: var(--secondaryContainer);
+  color: var(--secondary);
+}
