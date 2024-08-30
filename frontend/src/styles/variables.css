@@ -39,7 +39,7 @@
     --surfaceContainer: #f0f0f0;
     --onSurface: #ebebeb;
 
-    --shadow: #00000028;
+    --shadow: #ffffff28;
   }
 }
 
@@ -76,7 +76,7 @@
   --surfaceContainer: #f0f0f0;
   --onSurface: #ebebeb;
 
-  --shadow: #00000028;
+  --shadow: #ffffff28;
 }
 
 /* Light theme */

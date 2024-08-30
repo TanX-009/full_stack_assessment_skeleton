@@ -38,7 +38,7 @@
   align-items: center;
   justify-content: center;
 
-  border: var(--border) solid transparent;
+  border: var(--border) solid var(--primary);
   outline: none;
   border-radius: var(--radius);
 
@@ -49,12 +49,11 @@
 }
 
 .lowContrastClickable:hover {
-  background: inherit;
-  border: var(--border) solid var(--primaryContainer);
+  box-shadow: inset 0 0 0 var(--sp-6xs) var(--primary);
 }
 
 .lowContrastClickable:active {
-  background: var(--surface);
+  box-shadow: none;
 }
 
 .panel {
