@@ -1,16 +1,52 @@
-.card {
+.cardContainer {
   width: calc(5 * var(--sp-xl));
   max-width: 100%;
   aspect-ratio: 1/1;
+}
 
+.card {
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: var(--sp-3xs);
 }
 
 .info {
-  height: 80%;
   display: flex;
   flex-direction: column;
   overflow: auto;
+}
+
+.modalContainer {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  z-index: 100;
+
+  background: var(--shadow);
+  backdrop-filter: blur(5px);
+}
+
+.modal {
+  width: 100%;
+  max-width: calc(10 * var(--sp-xl));
+
+  z-index: 103;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sp-3xs);
 }

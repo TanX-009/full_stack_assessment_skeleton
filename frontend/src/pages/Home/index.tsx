@@ -7,7 +7,7 @@ export default function Home() {
     return [
       {
         street_address:
-          "123 Main St asdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff asdf asdf asf asdf asdf asdf asdf asdf asf sa fas fasdf sadf asd fasdadsf as ddsa fsa",
+          "123 Main St asdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff asdf asdf asf asdf asdf asdf asdf asdf asf sa fas fasdf sadf asd fasdadsf as ddsa fsa asdf asf saf asf saf sadf asdf jasflj as;lfj ;asldjf lasjf ;lasjf ;lajs df",
         state: "CA asdf asf as f",
         zip: "12345",
         sqft: 1000,
