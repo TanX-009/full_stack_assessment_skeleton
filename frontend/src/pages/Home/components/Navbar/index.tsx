@@ -1,3 +1,4 @@
+import Button from "../../../../components/ui/Button";
 import styles from "./styles.module.css";
 
 export default function Navbar() {
@@ -17,7 +18,13 @@ export default function Navbar() {
           ))}
         </select>
       </div>
-      <div>page, light/dark</div>
+      <div className={styles.pages}>
+        <Button.LowContrast>{"<<"}</Button.LowContrast>
+        <Button.LowContrast>{"<"}</Button.LowContrast>
+        {1}
+        <Button.LowContrast>{">"}</Button.LowContrast>
+        <Button.LowContrast>{">>"}</Button.LowContrast>
+      </div>
     </div>
   );
 }

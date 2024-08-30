@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .userSelector {
@@ -19,4 +20,12 @@
 
   background: var(--secondaryContainer);
   color: var(--secondary);
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--sp-3xs);
 }
