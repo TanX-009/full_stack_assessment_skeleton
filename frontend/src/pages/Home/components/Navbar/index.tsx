@@ -5,6 +5,7 @@ import { RootState } from "../../../../store";
 import { ChangeEvent, useEffect } from "react";
 import { useFindAllUsersQuery } from "../../../../features/apiSlice";
 import Home from "../../../../types/home.type";
+import Loading from "../../../../components/ui/Loading";
 
 interface TProps {
   page: number;
@@ -48,7 +49,7 @@ export default function Navbar({ page, setPage, homes }: TProps) {
         {error ? (
           <p>Error fetching users!</p>
         ) : isLoading ? (
-          <p>Loading...</p>
+          <Loading />
         ) : (
           <>
             <label htmlFor="select_user">Select user:</label>

@@ -1,0 +1,36 @@
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading {
+  width: 1em;
+  height: 1em;
+  position: relative;
+
+  border-radius: 50%;
+
+  display: inline-block;
+  border: var(--border) solid var(--primary);
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+
+  span {
+    box-sizing: border-box;
+    width: 0.35em;
+    height: 0.35em;
+
+    content: "";
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+  }
+}

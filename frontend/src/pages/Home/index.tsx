@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import styles from "./styles.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import Loading from "../../components/ui/Loading";
 
 export default function Home() {
   const [page, setPage] = useState<number>(1);
@@ -33,7 +34,9 @@ export default function Home() {
       {error ? (
         <p>Error fetching data!</p>
       ) : isLoading ? (
-        <p>Loading...</p>
+        <div className={styles.loader}>
+          <Loading />
+        </div>
       ) : (
         <div className={styles.homes}>
           {currentUser.toString() !== "-1" ? (

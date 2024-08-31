@@ -8,6 +8,7 @@ import {
 import styles from "./styles.module.css";
 import { RootState } from "../../../../../../store";
 import { useEffect, useState } from "react";
+import Loading from "../../../../../../components/ui/Loading";
 
 interface TProps {
   normal: () => void;
@@ -152,7 +153,7 @@ export default function ModalScreen({
 
           {!isEqual(checkboxList, changedList) ? (
             <Button.HighContrast onClick={useOnSave}>
-              {updateLoading ? "Saving..." : saveTxt}
+              {updateLoading ? <Loading /> : saveTxt}
             </Button.HighContrast>
           ) : null}
         </div>
