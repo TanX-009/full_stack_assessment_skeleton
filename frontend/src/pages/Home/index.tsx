@@ -1,132 +1,50 @@
+import { useState } from "react";
+import { useFindHomesByUserQuery } from "../../features/apiSlice";
 import Card from "./components/Card";
 import Navbar from "./components/Navbar";
 import styles from "./styles.module.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 export default function Home() {
-  const homes = () => {
-    return [
-      {
-        street_address:
-          "123 Main St asdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff asdf asdf asf asdf asdf asdf asdf asdf asf sa fas fasdf sadf asd fasdadsf as ddsa fsa asdf asf saf asf saf sadf asdf jasflj as;lfj ;asldjf lasjf ;lasjf ;lajs df",
-        state: "CA asdf asf as f",
-        zip: "12345",
-        sqft: 1000,
-        beds: 2,
-        baths: 2,
-        list_price: 100000,
-      },
-      {
-        street_address: "456 Elm St",
-        state: "CA",
-        zip: "12345",
-        sqft: 1500,
-        beds: 3,
-        baths: 2,
-        list_price: 150000,
-      },
-      {
-        street_address: "789 Oak St",
-        state: "CA",
-        zip: "12345",
-        sqft: 2000,
-        beds: 4,
-        baths: 3,
-        list_price: 200000,
-      },
-      {
-        street_address:
-          "123 Main St asdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff asdf asdf asf asdf asdf asdf asdf asdf asf sa fas fasdf sadf asd fasdadsf as ddsa fsa",
-        state: "CA asdf asf as f",
-        zip: "12345",
-        sqft: 1000,
-        beds: 2,
-        baths: 2,
-        list_price: 100000,
-      },
-      {
-        street_address: "456 Elm St",
-        state: "CA",
-        zip: "12345",
-        sqft: 1500,
-        beds: 3,
-        baths: 2,
-        list_price: 150000,
-      },
-      {
-        street_address: "789 Oak St",
-        state: "CA",
-        zip: "12345",
-        sqft: 2000,
-        beds: 4,
-        baths: 3,
-        list_price: 200000,
-      },
-      {
-        street_address:
-          "123 Main St asdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff asdf asdf asf asdf asdf asdf asdf asdf asf sa fas fasdf sadf asd fasdadsf as ddsa fsa",
-        state: "CA asdf asf as f",
-        zip: "12345",
-        sqft: 1000,
-        beds: 2,
-        baths: 2,
-        list_price: 100000,
-      },
-      {
-        street_address: "456 Elm St",
-        state: "CA",
-        zip: "12345",
-        sqft: 1500,
-        beds: 3,
-        baths: 2,
-        list_price: 150000,
-      },
-      {
-        street_address: "789 Oak St",
-        state: "CA",
-        zip: "12345",
-        sqft: 2000,
-        beds: 4,
-        baths: 3,
-        list_price: 200000,
-      },
-      {
-        street_address:
-          "123 Main St asdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff asdf asdf asf asdf asdf asdf asdf asdf asf sa fas fasdf sadf asd fasdadsf as ddsa fsa",
-        state: "CA asdf asf as f",
-        zip: "12345",
-        sqft: 1000,
-        beds: 2,
-        baths: 2,
-        list_price: 100000,
-      },
-      {
-        street_address: "456 Elm St",
-        state: "CA",
-        zip: "12345",
-        sqft: 1500,
-        beds: 3,
-        baths: 2,
-        list_price: 150000,
-      },
-      {
-        street_address: "789 Oak St",
-        state: "CA",
-        zip: "12345",
-        sqft: 2000,
-        beds: 4,
-        baths: 3,
-        list_price: 200000,
-      },
-    ];
+  const [page, setPage] = useState<number>(1);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+
+  const {
+    data: homes,
+    isLoading,
+    error,
+    refetch,
+  } = useFindHomesByUserQuery({
+    userId: currentUser,
+    page: page,
+  });
+
+  // refetch homes after updating in the modal
+  const refetchHomes = (callback: () => void) => {
+    refetch().then(() => {
+      callback();
+    });
   };
+
   return (
     <>
-      <Navbar />
-      <div className={styles.homes}>
-        {homes().map((home, key) => (
-          <Card key={key} {...home} />
-        ))}
-      </div>
+      <Navbar page={page} setPage={setPage} homes={homes} />
+      {error ? (
+        <p>Error fetching data!</p>
+      ) : isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className={styles.homes}>
+          {currentUser.toString() !== "-1" ? (
+            homes?.map((home, key) => (
+              <Card key={key} refetchHomes={refetchHomes} {...home} />
+            ))
+          ) : (
+            <p>Please select a user.</p>
+          )}
+        </div>
+      )}
     </>
   );
 }

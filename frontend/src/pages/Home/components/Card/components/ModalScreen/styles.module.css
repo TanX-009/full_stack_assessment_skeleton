@@ -1,0 +1,48 @@
+.modalContainer {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  z-index: 100;
+
+  background: var(--shadow);
+  backdrop-filter: blur(5px);
+}
+
+.modal {
+  width: 100%;
+  max-width: calc(10 * var(--sp-xl));
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5xs);
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sp-3xs);
+}
+
+.userCheckbox {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3xs);
+}
+
+.checkbox {
+  width: calc(var(--sp-2xl) / 3);
+  aspect-ratio: 1/1;
+
+  accent-color: var(--mid);
+
+  cursor: pointer;
+}
