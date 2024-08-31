@@ -25,13 +25,23 @@ type TCheckboxObject = {
   };
 };
 
-function isEqual(obj1: TCheckboxObject, obj2: TCheckboxObject) {
-  for (const key in obj1) {
-    if (obj1[key].checked !== obj2[key].checked) {
-      return false;
+function isChanged(
+  checkboxList: TCheckboxObject,
+  changedList: TCheckboxObject,
+) {
+  for (const key in checkboxList) {
+    if (checkboxList[key].checked !== changedList[key].checked) {
+      return true;
     }
   }
-  return true;
+  return false;
+}
+
+function atleastOneChecked(changedList: TCheckboxObject) {
+  for (const key in changedList) {
+    if (changedList[key].checked) return true;
+  }
+  return false;
 }
 
 export default function ModalScreen({
@@ -145,9 +155,13 @@ export default function ModalScreen({
           ))
         )}
         <div className={styles.buttons}>
+          {atleastOneChecked(changedList) ? null : (
+            <p>Please select atleast one user.</p>
+          )}
           <Button.LowContrast onClick={normal}>Cancel</Button.LowContrast>
 
-          {!isEqual(checkboxList, changedList) ? (
+          {isChanged(checkboxList, changedList) &&
+          atleastOneChecked(changedList) ? (
             <Button.HighContrast onClick={useOnSave}>
               {updateLoading ? <Loading /> : saveTxt}
             </Button.HighContrast>
