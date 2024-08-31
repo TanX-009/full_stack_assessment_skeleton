@@ -29,6 +29,7 @@ const api = createApi({
 export const {
   useFindAllUsersQuery,
   useFindUsersByHomeQuery,
+  useLazyFindUsersByHomeQuery,
   useFindHomesByUserQuery,
   useUpdateUsersMutation,
 } = api;

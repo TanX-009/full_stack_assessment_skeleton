@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import Button from "../../../../../../components/ui/Button";
 import Panel from "../../../../../../components/ui/Panel";
 import {
-  useFindUsersByHomeQuery,
+  useLazyFindUsersByHomeQuery,
   useUpdateUsersMutation,
 } from "../../../../../../features/apiSlice";
 import styles from "./styles.module.css";
@@ -41,12 +41,8 @@ export default function ModalScreen({
   refetchHomes,
   presence,
 }: TProps) {
-  const {
-    data: homeUsers,
-    isLoading,
-    error,
-    refetch,
-  } = useFindUsersByHomeQuery({ homeId: home_id });
+  const [trigger, { data: homeUsers, isLoading, error }] =
+    useLazyFindUsersByHomeQuery();
 
   const [updateUsers, { isLoading: updateLoading }] = useUpdateUsersMutation();
 
@@ -123,7 +119,7 @@ export default function ModalScreen({
   }, [allUsers, homeUsers]);
 
   useEffect(() => {
-    refetch();
+    trigger({ homeId: home_id });
   }, [presence]);
 
   return (
