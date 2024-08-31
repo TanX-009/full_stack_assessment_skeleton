@@ -129,7 +129,73 @@ docker-compose -f docker-compose.initial.yml up --build -d
 
 ### solution
 
-> explain briefly your solution for this problem here
+The preset table has following columns:
+| Field          | Type         | Null | Key | Default | Extra |
+|----------------|--------------|------|-----|---------|-------|
+| username       | varchar(100) | YES  |     | NULL    |       |
+| email          | varchar(100) | YES  |     | NULL    |       |
+| street_address | varchar(255) | YES  |     | NULL    |       |
+| state          | varchar(50)  | YES  |     | NULL    |       |
+| zip            | varchar(10)  | YES  |     | NULL    |       |
+| sqft           | float        | YES  |     | NULL    |       |
+| beds           | int          | YES  |     | NULL    |       |
+| baths          | int          | YES  |     | NULL    |       |
+| list_price     | float        | YES  |     | NULL    |       |
+
+The username and corresponding email are repetitive.
+The state is repetitive.
+street_address, zip, sqft, beds, baths, list_price are unique.
+
+A `user` named table with following columns is created:
+| Field    | Type         | Null | Key | Default | Extra          |
+|----------|--------------|------|-----|---------|----------------|
+| user_id  | int          | NO   | PRI | NULL    | auto_increment |
+| username | varchar(255) | NO   | UNI | NULL    |                |
+| email    | varchar(255) | NO   | UNI | NULL    |                |
+
+A `state` named table with following columns is created:
+| Field      | Type         | Null | Key | Default | Extra          |
+|------------|--------------|------|-----|---------|----------------|
+| state_id   | int          | NO   | PRI | NULL    | auto_increment |
+| state_name | varchar(255) | NO   | UNI | NULL    |                |
+
+A `home` named table with following columns is created:
+| Field          | Type          | Null | Key | Default | Extra          |
+|----------------|---------------|------|-----|---------|----------------|
+| home_id        | int           | NO   | PRI | NULL    | auto_increment |
+| state          | int           | YES  | MUL | NULL    |                |
+| street_address | varchar(255)  | NO   |     | NULL    |                |
+| zip            | varchar(10)   | NO   |     | NULL    |                |
+| sqft           | decimal(10,2) | NO   |     | NULL    |                |
+| beds           | int           | NO   |     | NULL    |                |
+| baths          | int           | NO   |     | NULL    |                |
+| list_price     | decimal(15,2) | NO   |     | NULL    |                |
+
+In above table state is foregin key from `state` table.
+
+All the data from preset table is parsed into above new tables.
+
+A `user_home` named table(old is renamed to `user_home_old` and still kept for safekeeping) with following columns is created:
+| Field | Type | Null | Key | Default | Extra          |
+|-------|------|------|-----|---------|----------------|
+| id    | int  | NO   | PRI | NULL    | auto_increment |
+| user  | int  | YES  | MUL | NULL    |                |
+| home  | int  | YES  | MUL | NULL    |                |
+
+In above table both `user` and `home` are foregin keys related to `user` and `home` table respectively.
+The data is then parsed into above table from preset table.
+
+The database modified as per required using `99_final_db_dump.sql` and the final docker compose file.
+
+The database can be fired up using the instructions provided in the last section.
+
+> [!CAUTION]
+> If there is a pre-existing docker volume with `full_stack_assessment_skeleton_mysql_vol_2` name.
+> 
+> It may cause conflict with the sql queries provided in `99_final_db_dump.sql`.
+> 
+> Please delete it before starting.
+
 
 ## 2. React SPA
 
@@ -220,7 +286,20 @@ docker-compose -f docker-compose.initial.yml up --build -d
 
 ### solution
 
-> explain briefly your solution for this problem here
+On `Edit User` click a modal is opened and the associated users are fetched.
+When user boxes are changed two states are checked `init` and `changed` if are same or if no user is selected the save button is hidden. onChange is shown hence making it idempotent.
+Cancel button cancels the action without altering anything.
+
+OnSave a request to backend is made if returned sucessfull a state change refetches the home cards data thus updating the cards view related to the user.
+
+Nothing else than specified is used for frontend.
+
+Frontend can be started using following steps:
+```bash
+cd .frontend
+npm install
+npm run dev
+```
 
 ## 3. Backend API development on Node
 
@@ -281,7 +360,32 @@ docker-compose -f docker-compose.initial.yml up --build -d
 
 ### solution
 
-> explain briefly your solution for this problem here
+4 apis are created in `NestJS`,`TypeORM`
+| **endpoint**        | **method** | **query/body**           |
+|---------------------|------------|--------------------------|
+| `user/find-all`     | GET        |  -                       |
+| `user/find-by-home` | GET        | ?homeId=_                |
+| `home/find-by-user` | GET        | ?userId=_&page=_         |
+| `home/update-users` | POST       | { homeId, userIds[] }    |
+
+For pagination support only the section of data is returned back using page number passed from frontend
+
+To update users following steps are used:
+1. Home associated to the passed homeId is searched.
+2. Users associated to the home are searched from `user_home` table.
+3. Passed userIds array is filtered of so that only the ones that are to be added are kept(`toBeAdded`).
+4. Associated users' array is then filtered so that only the ones that are to be removed are kept(`toBeRemoved`).
+5. Using `toBeRemoved` the users associated to the home are removed(from `user_home`).
+6. Using `toBeAdded` the users are associated(added to `user_home`).
+
+Nothing else than specified is used for backend that needs to be explained.
+
+Backend can be started using following steps:
+```bash
+cd ./backend
+npm install
+npm run start:dev
+```
 
 ## Submission Guidelines
 
@@ -303,8 +407,7 @@ docker-compose -f docker-compose.initial.yml up --build -d
 
 ### database
 
-> [!CAUTION]
-> The database changes you make while developing the solution, by default will not be visible to us or committed in the repo, so make sure to read and understand this section carefully!
+The database changes you make while developing the solution, by default will not be visible to us or committed in the repo, so make sure to read and understand this section carefully!
 
 - the database is inside a container, and all it's data (the tables you added, altered, etc..) are only saved inside a docker volume that's on your local system, invisible to us
 
