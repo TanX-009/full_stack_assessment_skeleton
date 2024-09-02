@@ -7,11 +7,11 @@ export class UserController {
 
   @Get('find-all')
   async findAllUsers() {
-    return this.userService.findAllUsers();
+    return await this.userService.findAllUsers();
   }
 
   @Get('find-by-home')
   async findUsersByHome(@Query('homeId') homeId: number) {
-    return this.userService.findUsersByHome(homeId);
+    return await this.userService.findUsersByHome(homeId);
   }
 }
