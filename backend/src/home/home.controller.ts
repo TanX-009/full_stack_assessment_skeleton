@@ -11,7 +11,7 @@ export class HomeController {
     @Query('page') page = 1,
     @Query('pageSize') pageSize = 50,
   ) {
-    return this.homeService.findHomesByUser(userId, page, pageSize);
+    return await this.homeService.findHomesByUser(userId, page, pageSize);
   }
 
   @Post('update-users')
